@@ -1,8 +1,9 @@
 @using Microsoft.AspNetCore.Identity
+@using Todo.Models.Identity
 @using Todo.Services
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject ApplicationUserManager UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -12,14 +13,13 @@
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
 
                     @{
-
                         var iu = await UserManager.GetUserAsync(User);
-                        var emailAddress = await UserManager.GetEmailAsync(iu);
-                        var gravatarhash = Gravatar.GetHash(emailAddress);
+                        var gravatarhash = Gravatar.GetHash(iu.Email);
+                        var displayName = $"{iu.Email} {iu.DisplayName}";
                     }
 
                     <img src="https://www.gravatar.com/avatar/@gravatarhash?s=30" />
-                    @UserManager.GetUserName(User)
+                    @displayName
                 </a>
             </li>
             <li>

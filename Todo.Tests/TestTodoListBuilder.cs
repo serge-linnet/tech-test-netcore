@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Todo.Data.Entities;
+using Todo.Models.Identity;
 
 namespace Todo.Tests
 {
@@ -11,10 +12,10 @@ namespace Todo.Tests
     public class TestTodoListBuilder
     {
         private readonly string title;
-        private readonly IdentityUser owner;
+        private readonly ApplicationUser owner;
         private readonly List<(string, Importance)> items = new List<(string, Importance)>();
 
-        public TestTodoListBuilder(IdentityUser owner, string title)
+        public TestTodoListBuilder(ApplicationUser owner, string title)
         {
             this.title = title;
             this.owner = owner;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using Todo.Models.Identity;
 
 namespace Todo.Data.Entities
 {
@@ -7,13 +8,13 @@ namespace Todo.Data.Entities
     {
         public int TodoListId { get; set; }
         public string Title { get; set; }
-        public IdentityUser Owner { get; set; }
+        public ApplicationUser Owner { get; set; }
 
         public ICollection<TodoItem> Items { get; set; } = new List<TodoItem>();
 
         protected TodoList() { }
 
-        public TodoList(IdentityUser owner, string title)
+        public TodoList(ApplicationUser owner, string title)
         {
             Owner = owner;
             Title = title;

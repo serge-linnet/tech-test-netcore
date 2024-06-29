@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Todo.Data;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoLists;
+using Todo.Models.Identity;
 using Todo.Models.TodoLists;
 using Todo.Services;
 
@@ -15,9 +16,9 @@ namespace Todo.Controllers
     public class TodoListController : Controller
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly IUserStore<IdentityUser> userStore;
+        private readonly IUserStore<ApplicationUser> userStore;
 
-        public TodoListController(ApplicationDbContext dbContext, IUserStore<IdentityUser> userStore)
+        public TodoListController(ApplicationDbContext dbContext, IUserStore<ApplicationUser> userStore)
         {
             this.dbContext = dbContext;
             this.userStore = userStore;
