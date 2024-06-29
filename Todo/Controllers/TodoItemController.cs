@@ -24,16 +24,14 @@ namespace Todo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TodoItemCreateFields fields)
         {
-            if (!ModelState.IsValid) { 
-                return BadRequest();
-            }
+            if (!ModelState.IsValid) { return View(fields); }
 
             var item = new TodoItem(fields.TodoListId, fields.ResponsiblePartyId, fields.Title, fields.Importance);
 
             await dbContext.AddAsync(item);
             await dbContext.SaveChangesAsync();
 
-            return Ok(item);
+            return RedirectToListDetail(fields.TodoListId);
         }
 
         [HttpGet]
@@ -63,7 +61,7 @@ namespace Todo.Controllers
 
         private RedirectToActionResult RedirectToListDetail(int fieldsTodoListId)
         {
-            return RedirectToAction("Detail", "TodoList", new {todoListId = fieldsTodoListId});
+            return RedirectToAction("Detail", "TodoList", new { todoListId = fieldsTodoListId });
         }
     }
 }
