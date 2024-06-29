@@ -3,13 +3,9 @@
 @using Todo.Views.TodoItem
 @model Todo.Models.TodoItems.TodoItemEditFields
 
-
 @{
     ViewData["Title"] = $"Edit Item in {Model.TodoListTitle}";
 }
-
-
-@inject ApplicationDbContext dbContext
 
 <h2>@ViewData["Title"]</h2>
 
@@ -51,7 +47,7 @@
                 <label asp-for="ResponsiblePartyId"></label>
                 @Html.DropDownListFor(
                     m => m.ResponsiblePartyId,
-                    dbContext.UserSelectListItems(),
+                    Model.ResponsibleParties,
                     new {@class="form-control"}
                     )
                 <span asp-validation-for="ResponsiblePartyId" class="text-danger"></span>

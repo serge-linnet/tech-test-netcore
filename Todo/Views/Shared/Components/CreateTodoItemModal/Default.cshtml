@@ -1,0 +1,65 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Todo.Data
+@using Todo.Data.Entities
+@using Todo.Views.TodoItem
+@model Todo.Models.TodoItems.TodoItemCreateFields
+
+<div class="modal-dialog" role="document">
+    <form asp-action="Create" asp-controller="TodoItem" method="POST">
+        <!-- form content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">@ViewData["Title"]</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-4">
+                    <section>
+                        @Html.AntiForgeryToken()
+
+                        @Html.HiddenFor(m => m.TodoListId)
+                        @Html.HiddenFor(m => m.TodoListTitle)
+
+                        <div class="form-group">
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" class="form-control" required />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Importance"></label>
+                            @Html.DropDownListFor(
+                                     m => m.Importance,
+                                     SelectListConvenience.ImportanceSelectListItems,
+                                     new { @class = "form-control" }
+                                     )
+                            <span asp-validation-for="Importance" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ResponsiblePartyId"></label>
+                            @Html.DropDownListFor(
+                                     m => m.ResponsiblePartyId,
+                                     Model.ResponsibleParties,
+                                     new { @class = "form-control" }
+                                     )
+                            <span asp-validation-for="ResponsiblePartyId" class="text-danger"></span>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+

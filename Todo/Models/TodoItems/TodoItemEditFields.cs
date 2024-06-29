@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Todo.Data.Entities;
 
 namespace Todo.Models.TodoItems
@@ -21,9 +23,11 @@ namespace Todo.Models.TodoItems
 
         public Importance Importance { get; set; }
 
+        public IEnumerable<SelectListItem> ResponsibleParties { get; } = new List<SelectListItem>();
+
         public TodoItemEditFields() { }
 
-        public TodoItemEditFields(int todoListId, string todoListTitle, int todoItemId, string title, bool isDone, string responsiblePartyId, Importance importance)
+        public TodoItemEditFields(int todoListId, string todoListTitle, int todoItemId, string title, bool isDone, string responsiblePartyId, Importance importance, IEnumerable<SelectListItem> responsibleParties)
         {
             TodoListId = todoListId;
             TodoListTitle = todoListTitle;
@@ -32,6 +36,7 @@ namespace Todo.Models.TodoItems
             IsDone = isDone;
             ResponsiblePartyId = responsiblePartyId;
             Importance = importance;
+            ResponsibleParties = responsibleParties;
         }
     }
 }

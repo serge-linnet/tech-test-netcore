@@ -32,9 +32,9 @@ namespace Todo.Controllers
             return View(viewmodel);
         }
 
-        public IActionResult Detail(int todoListId)
+        public async Task<IActionResult> Detail(int todoListId)
         {
-            var todoList = dbContext.SingleTodoList(todoListId);
+            var todoList = await dbContext.SingleTodoListAsync(todoListId);
             var viewmodel = TodoListDetailViewmodelFactory.Create(todoList);
             return View(viewmodel);
         }
