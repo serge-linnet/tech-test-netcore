@@ -1,15 +1,17 @@
-﻿using Todo.Data.Entities;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using Todo.Data.Entities;
 using Todo.Models.TodoItems;
 
 namespace Todo.EntityModelMappers.TodoItems
 {
     public class TodoItemEditFieldsFactory
     {
-        public static TodoItemEditFields Create(TodoItem todoItem)
+        public static TodoItemEditFields Create(TodoItem todoItem, IEnumerable<SelectListItem> responsibleParties)
         {
             var todoList = todoItem.TodoList;
             return new TodoItemEditFields(todoList.TodoListId, todoList.Title, todoItem.TodoItemId, todoItem.Title,
-                todoItem.IsDone, todoItem.ResponsiblePartyId, todoItem.Importance);
+                todoItem.IsDone, todoItem.ResponsiblePartyId, todoItem.Importance, responsibleParties);
         }
 
         public static void Update(TodoItemEditFields src, TodoItem dest)

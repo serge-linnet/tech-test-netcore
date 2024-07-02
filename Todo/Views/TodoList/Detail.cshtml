@@ -14,9 +14,13 @@
     <ul class="list-group">
 
         <li class="list-group-item">
-            <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
-                <strong>Add New Item</strong>
-            </a>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createTodoItemModal">
+                Add New Item
+            </button>
+
+            <div class="modal fade" id="createTodoItemModal" tabindex="-1" role="dialog" aria-hidden="true">
+                @await Component.InvokeAsync("CreateTodoItemModal", new { todoListId = Model.TodoListId })
+            </div>
         </li>
 
         @foreach (var item in Model.Items)
@@ -55,7 +59,7 @@
 
                 <div class="col-md-4 text-right">
                     <small>
-                        @item.ResponsibleParty.UserName
+                        @item.ResponsibleParty.DisplayName
 
                         <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
 

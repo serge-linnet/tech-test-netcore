@@ -6,6 +6,7 @@ using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoItems;
 using Todo.Models.TodoItems;
 using Todo.Services;
+using Todo.Views.TodoItem;
 
 namespace Todo.Controllers
 {
@@ -17,14 +18,6 @@ namespace Todo.Controllers
         public TodoItemController(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-        }
-
-        [HttpGet]
-        public IActionResult Create(int todoListId)
-        {
-            var todoList = dbContext.SingleTodoList(todoListId);
-            var fields = TodoItemCreateFieldsFactory.Create(todoList, User.Id());
-            return View(fields);
         }
 
         [HttpPost]
@@ -42,10 +35,11 @@ namespace Todo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int todoItemId)
+        public async Task<IActionResult> Edit(int todoItemId)
         {
             var todoItem = dbContext.SingleTodoItem(todoItemId);
-            var fields = TodoItemEditFieldsFactory.Create(todoItem);
+            var responsibleParties = await dbContext.UserSelectListItemsAsync();
+            var fields = TodoItemEditFieldsFactory.Create(todoItem, responsibleParties);
             return View(fields);
         }
 
@@ -67,7 +61,7 @@ namespace Todo.Controllers
 
         private RedirectToActionResult RedirectToListDetail(int fieldsTodoListId)
         {
-            return RedirectToAction("Detail", "TodoList", new {todoListId = fieldsTodoListId});
+            return RedirectToAction("Detail", "TodoList", new { todoListId = fieldsTodoListId });
         }
     }
 }

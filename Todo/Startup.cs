@@ -8,6 +8,9 @@ using Todo.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Todo.Models.Identity;
+using Todo.Services;
 
 namespace Todo
 {
@@ -34,8 +37,10 @@ namespace Todo
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddUserManager<ApplicationUserManager>();
+            //.AddUserStore<UserStore<ApplicationUser>>();
 
             services.AddControllers();
 
@@ -45,6 +50,9 @@ namespace Todo
                     .RequireAuthenticatedUser()
                     .Build();
             });
+
+            services.AddScoped<IGravatarProfileService, GravatarProfileService>();
+            //  services.AddScoped<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
